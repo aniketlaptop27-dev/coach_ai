@@ -6,27 +6,29 @@ import {
   ShieldCheck, Activity, GraduationCap
 } from 'lucide-react';
 
-// --- Local AI Service (Ollama) ---
+// --- Cloud AI Service (Groq Llama3) ---
 const callLocalAI = async (prompt, systemInstruction = "") => {
-  const url = "http://localhost:11434/api/generate";
-  const fullPrompt = `System: ${systemInstruction}\n\nUser: ${prompt}`;
-
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+  const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${import.meta.env.VITE_GROQ_API_KEY}`
+    },
     body: JSON.stringify({
-      model: "llama3",
-      prompt: fullPrompt,
-      stream: false,
+      model: "llama3-8b-8192",
+      messages: [
+        { role: "system", content: systemInstruction },
+        { role: "user", content: prompt }
+      ]
     })
   });
 
   if (!response.ok) {
-    throw new Error("Local intelligence node unreachable. Ensure the backend service is active.");
+    throw new Error("AI service unavailable");
   }
 
   const data = await response.json();
-  return data.response;
+  return data.choices[0].message.content;
 };
 
 // --- Formatting Component ---
