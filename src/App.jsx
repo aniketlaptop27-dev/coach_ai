@@ -292,7 +292,7 @@ export default function App() {
           </div>
           <div className="flex items-center bg-emerald-50 px-4 py-2 rounded-xl border border-emerald-100">
             <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse mr-3 shadow-lg shadow-emerald-500/50"></div>
-            <span className="text-[10px] font-black text-emerald-700 uppercase tracking-widest">Local Neural Core: Active</span>
+            <span className="text-[10px] font-black text-emerald-700 uppercase tracking-widest">AI Engine: Online</span>
           </div>
         </header>
 
