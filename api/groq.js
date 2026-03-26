@@ -19,8 +19,18 @@ export default async function handler(req, res) {
     });
   
     const data = await response.json();
-  
-    const text = data.choices?.[0]?.message?.content || "";
-  
-    res.status(200).json({ text });
+
+console.log("GROQ RAW RESPONSE:", data);
+
+let text = "";
+
+if (data.choices && data.choices.length > 0) {
+  if (data.choices[0].message && data.choices[0].message.content) {
+    text = data.choices[0].message.content;
+  } else if (data.choices[0].text) {
+    text = data.choices[0].text;
+  }
+}
+
+res.status(200).json({ text });
   }
