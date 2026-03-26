@@ -1,5 +1,11 @@
-export default async function handler(req, res) {
-    const { prompt, systemInstruction } = req.body;
+  export default async function handler(req, res) {
+
+    const body = typeof req.body === "string"
+      ? JSON.parse(req.body)
+      : req.body;
+  
+    const prompt = body.prompt;
+    const systemInstruction = body.systemInstruction;
   
     const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
@@ -19,18 +25,9 @@ export default async function handler(req, res) {
     });
   
     const data = await response.json();
-
-console.log("GROQ RAW RESPONSE:", data);
-
-let text = "";
-
-if (data.choices && data.choices.length > 0) {
-  if (data.choices[0].message && data.choices[0].message.content) {
-    text = data.choices[0].message.content;
-  } else if (data.choices[0].text) {
-    text = data.choices[0].text;
-  }
-}
-
-res.status(200).json({ text });
+  
+    const text = data?.choices?.[0]?.message?.content || "";
+  
+    res.status(200).json({ text });
+  
   }
