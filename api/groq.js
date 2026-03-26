@@ -25,9 +25,21 @@
     });
   
     const data = await response.json();
-  
-    const text = data?.choices?.[0]?.message?.content || "";
-  
-    res.status(200).json({ text });
+
+console.log("GROQ RESPONSE:", data);
+
+let text = "";
+
+if (data && data.choices && data.choices.length > 0) {
+  const choice = data.choices[0];
+
+  if (choice.message && choice.message.content) {
+    text = choice.message.content;
+  } else if (choice.text) {
+    text = choice.text;
+  }
+}
+
+res.status(200).json({ text });
   
   }
