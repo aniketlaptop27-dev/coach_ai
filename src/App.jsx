@@ -121,7 +121,8 @@ const ToolView = ({ title, icon: Icon, onSubmit, placeholder, label }) => {
       const res = await onSubmit(input);
       setResult(res);
     } catch (e) {
-      setResult("System Error: Local intelligence node is unreachable.");
+      console.error(e);
+      setResult("System Error: AI engine unreachable. Please try again.");
     } finally {
       setLoading(false);
     }
