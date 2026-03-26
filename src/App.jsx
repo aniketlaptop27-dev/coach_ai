@@ -17,24 +17,19 @@ const callLocalAI = async (prompt, systemInstruction = "") => {
     body: JSON.stringify({
       model: "llama3-70b-8192",
       messages: [
-        {
-          role: "system",
-          content: systemInstruction
-        },
-        {
-          role: "user",
-          content: prompt
-        }
+        { role: "system", content: systemInstruction },
+        { role: "user", content: prompt }
       ],
       temperature:0.7,
       max_tokens:800
+      stream: false
     })
   });
 
   const data = await response.json();
 
   if (!response.ok) {
-    console.error(data);
+    console.error("Groq Error:", data);
     throw new Error("AI service unavailable");
   }
 
