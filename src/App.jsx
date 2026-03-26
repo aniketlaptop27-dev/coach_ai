@@ -21,21 +21,11 @@ const callLocalAI = async (prompt, systemInstruction = "") => {
 
   const data = await response.json();
 
-  console.log("FULL AI RESPONSE:", data);
-
   if (!response.ok) {
     throw new Error("AI service unavailable");
   }
 
-  const content =
-    data?.choices?.[0]?.message?.content ||
-    data?.data?.choices?.[0]?.message?.content;
-
-  if (content) {
-    return content;
-  }
-
-  return "AI returned an empty response.";
+  return data.text;
 };
 
 // --- Formatting Component ---
