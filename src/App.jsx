@@ -11,25 +11,17 @@ const callLocalAI = async (prompt, systemInstruction = "") => {
   const response = await fetch("/api/groq", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${import.meta.env.VITE_GROQ_API_KEY}`
+      "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      model: "llama3-70b-8192",
-      messages: [
-        { role: "system", content: systemInstruction },
-        { role: "user", content: prompt }
-      ],
-      temperature:0.7,
-      max_tokens:800
-      stream: false
+      prompt,
+      systemInstruction
     })
   });
 
   const data = await response.json();
 
   if (!response.ok) {
-    console.error("Groq Error:", data);
     throw new Error("AI service unavailable");
   }
 
