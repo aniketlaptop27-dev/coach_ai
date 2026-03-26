@@ -19,7 +19,9 @@ const callLocalAI = async (prompt, systemInstruction = "") => {
       messages: [
         { role: "system", content: systemInstruction },
         { role: "user", content: prompt }
-      ]
+      ],
+      temperature:0.7,
+      max_tokens:800
     })
   });
 
