@@ -8,7 +8,7 @@ import {
 
 // --- Cloud AI Service (Groq Llama3) ---
 const callLocalAI = async (prompt, systemInstruction = "") => {
-  const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+  const response = await fetch("/api/groq", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
