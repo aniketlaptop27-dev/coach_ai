@@ -15,21 +15,29 @@ const callLocalAI = async (prompt, systemInstruction = "") => {
       "Authorization": `Bearer ${import.meta.env.VITE_GROQ_API_KEY}`
     },
     body: JSON.stringify({
-      model: "llama3-8b-8192",
+      model: "llama3-70b-8192",
       messages: [
-        { role: "system", content: systemInstruction },
-        { role: "user", content: prompt }
+        {
+          role: "system",
+          content: systemInstruction
+        },
+        {
+          role: "user",
+          content: prompt
+        }
       ],
       temperature:0.7,
       max_tokens:800
     })
   });
 
+  const data = await response.json();
+
   if (!response.ok) {
+    console.error(data);
     throw new Error("AI service unavailable");
   }
 
-  const data = await response.json();
   return data.choices[0].message.content;
 };
 
