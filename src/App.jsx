@@ -21,6 +21,8 @@ const callLocalAI = async (prompt, systemInstruction = "") => {
 
   const data = await response.json();
 
+  console.log("API RESPONSE:", data); // important
+
   if (!response.ok) {
     throw new Error("AI service unavailable");
   }
